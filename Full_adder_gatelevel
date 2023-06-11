@@ -1,0 +1,57 @@
+//design module
+
+`timescale 1ns / 1ps
+
+module fa_1(s,co,a,b,ci
+
+    );
+output s,co;
+input a,b,ci;
+wire w1,w2,w3;
+xor G1(w1,a,b);
+xor G2(s,w1,ci);
+and G3(w2,a,b);
+and G4(w3,w1,ci);
+or G5(co,w3,w2);
+endmodule
+
+//testbench
+
+`timescale 1ns / 1ps
+
+
+
+
+module test;
+reg a,b,ci;
+wire s,co;
+//intentiate the module
+fa_1 fua(s,co,a,b,ci);
+initial
+begin
+{a,b,ci}=3'b000;
+#2
+{a,b,ci}=3'b001;
+#2
+{a,b,ci}=3'b010;
+#2
+{a,b,ci}=3'b011;
+#3
+{a,b,ci}=3'b100;
+#3
+{a,b,ci}=3'b101;
+#2
+{a,b,ci}=3'b110;
+#2
+{a,b,ci}=3'b111;
+end
+initial
+begin
+$monitor("%time=%g,s=%b,co=%b,a=%b,b=%b,ci=%b",$time,s,co,a,b,ci);
+end
+initial
+#100
+$finish;
+
+endmodule
+
