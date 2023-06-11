@@ -1,0 +1,43 @@
+//design module
+
+module sb_gl(di,bo,a,b);
+output di,bo;
+input a,b;
+wire w1;
+not g0(w1,a);
+and g1(bo,w1,b);
+xor g2(di,a,b);
+endmodule
+
+
+
+
+// test bench
+
+module test_hs;
+    reg a,b;
+    wire d,bo;
+    sb_gl g1(d,bo,a,b);
+    initial
+    begin
+    a=1'b0;
+    b=1'b0;
+    end
+    always
+    #2
+    begin
+a=a+1'b1;
+    end
+    always
+    #3
+    begin
+    b=b+1'b1;
+    end
+       time curr_time;
+    initial
+    $monitor("curr_time=%g,d=%b,bo=%b,a=%b,b=%b",curr_time,d,bo,a,b);
+    initial
+    #20
+    $finish;
+    
+endmodule
