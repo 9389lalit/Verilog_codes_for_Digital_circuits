@@ -1,0 +1,37 @@
+//design module
+
+module hs_df(output di,bo, input a,b);
+
+assign di=a^b;
+assign bo=(~a)&b;
+
+endmodule
+
+// test bench
+module test_hs;
+reg a,b;
+wire d,bo;
+hs_df s1(d,bo,a,b);
+initial
+begin
+a=1'b0;
+  b=1'b0;
+end
+always
+#3
+begin
+a=a+1'b1;
+  end
+
+  always
+#5
+  begin
+  b=b+1'b1;
+end
+
+initial
+$monitor("$time=%g,d=%b,bo=%b,a=%b,b=%b",$time,d,bo,a,b);
+initial
+#18
+$finish;
+endmodule
