@@ -1,0 +1,50 @@
+//design module
+
+`timescale 1ns / 1ps
+
+module fa1(s,co,a,b,ci);
+    
+    output s,co;
+input a,b,ci;
+assign s=a^b^ci;
+assign co=a&b|ci&(a^b);
+endmodule
+
+
+// testbench
+
+`timescale 1ns / 1ps
+
+module testfa;
+reg a,b,ci;
+wire s,co;
+//intentiate the module
+fa1 fua(s,co,a,b,ci);
+initial
+begin
+{a,b,ci}=3'b000;
+#2
+{a,b,ci}=3'b001;
+#2
+{a,b,ci}=3'b010;
+#2
+{a,b,ci}=3'b011;
+#3
+{a,b,ci}=3'b100;
+#3
+{a,b,ci}=3'b101;
+#2
+{a,b,ci}=3'b110;
+#2
+{a,b,ci}=3'b111;
+end
+initial
+begin
+$display("a=%d,b=%d,ci%d,s-%d,co=%d",a,b,ci,s,co);
+end
+initial
+#100
+$finish;
+
+
+endmodule
