@@ -1,0 +1,35 @@
+module full_subDf(output D,Bo, input a,b,ci);
+assign D=a^b^ci;
+assign Bo=~a&b|ci&(a^b);
+endmodule
+
+// testbench
+module test_fs;
+reg a,b,ci;
+wire D,Bo;
+full_subDf ff(D,Bo,a,b,ci);
+initial
+begin
+a=1'b0;b=1'b0;ci=1'b0;
+#2
+a=1'b0;b=1'b0;ci=1'b1;
+#2
+a=1'b0;b=1'b1;ci=1'b0;
+#2
+a=1'b0;b=1'b1;ci=1'b1;
+#2
+a=1'b1;b=1'b0;ci=1'b0;
+#2
+a=1'b1;b=1'b0;ci=1'b1;
+#2
+a=1'b1;b=1'b1;ci=1'b0;
+#2
+a=1'b1;b=1'b1;ci=1'b1;
+end
+
+initial
+$monitor("$time=%g,D=%b,Bo=%b,a=%b,b=%b,ci=%b",$time,D,Bo,a,b,ci);
+initial
+#30
+$finish;
+endmodule
