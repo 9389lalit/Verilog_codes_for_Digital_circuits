@@ -1,0 +1,35 @@
+module full_sub(output D,Bo, input a,b,ci);
+wire w1,w2,w3,abar,w4;
+xor G1(w1,a,b);
+not N1(abar,a);
+and G2(w2,abar,b);
+xor G3(D,w1,ci);
+not N2(w4,w1);
+and G4(w3,w4,ci);
+or G5(Bo,w2,w3);
+endmodule
+
+// testbench
+module test_fs;
+reg a,b,ci;
+wire D,Bo;
+full_sub ff(D,Bo,a,b,ci);
+initial
+begin
+a=1'b0;
+b=1'b0;
+ci=1'b0;
+end
+
+always
+begin
+#3
+{a,b,ci}={a,b,ci}+1'b1;
+end
+
+initial
+$monitor("$time=%g,D=%b,Bo=%b,a=%b,b=%b,ci=%b",$time,D,Bo,a,b,ci);
+initial
+#30
+$finish;
+endmodule
