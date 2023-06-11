@@ -1,0 +1,53 @@
+
+//design
+
+`timescale 1ns / 1ps
+
+
+module fa_bm(s,co,a,b,ci);
+output s,co;
+input a,b,ci;
+reg s,co;
+always@(*)
+begin
+s=a^b^ci;
+co=(~a)&b|ci&(a^b);
+end
+endmodule
+
+
+//testbench
+
+`timescale 1ns / 1ps
+
+
+module testfs;
+reg a,b,ci;
+wire s,co;
+fa_bm f1(s,co,a,b,ci);
+initial
+
+begin
+a=1'b0;
+b=1'b0;
+ci=1'b0;
+end
+
+
+always
+begin
+#4
+a=a+1'b1;
+#2
+b=b+1'b1;
+#1
+ci=ci+1'b1;
+end
+
+initial
+$monitor("$time=%0t,a=%b,b=%b,ci=%b,co=%b,s=%b",$time,a,b,ci,co,s);
+initial
+#18
+$finish;
+
+endmodule
