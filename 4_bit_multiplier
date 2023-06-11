@@ -1,0 +1,39 @@
+ //design module
+
+module multiplier2bit(out,a,b);
+output [15:0]out;
+input [3:0]a;
+input [3:0]b;
+assign out=a*b;
+endmodule
+
+//testbench
+
+module testbench;
+reg [3:0] a,b;
+wire [15:0] out;
+multiplier2bit m1(out,a,b);
+
+initial
+begin
+a=4'b0000;
+b=4'b0000;
+end
+
+always 
+begin
+#2
+{a,b}={a,b}+1'b1;
+end
+
+initial
+$monitor($time=%g,a=%d,b=%d,out=%d,$time,a,b,out);
+
+initial
+#1100
+$finish;
+
+endmodule
+
+
+
