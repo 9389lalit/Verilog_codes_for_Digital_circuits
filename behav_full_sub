@@ -1,0 +1,39 @@
+module full_subBm(D,Bo,a,b,ci);
+input a,b,ci;
+output D,Bo;
+reg D,Bo;
+always @(*)
+begin
+{Bo,D}=a-b-ci;
+end
+endmodule
+
+// testbench
+module test_fs;
+reg a,b,ci;
+wire D,Bo;
+full_subBm ff(D,Bo,a,b,ci);
+initial
+begin
+a=1'b0;b=1'b0;ci=1'b0;
+end
+always #2
+a=a+1'b1;
+always
+#3
+b=1'b1+b;
+always
+#4
+ci=ci+1'b1;
+// initial clk=1'b0;
+// always
+// #4
+// clk=~clk;
+
+
+initial
+$monitor("$time=%g,D=%b,Bo=%b,a=%b,b=%b,ci=%b",$time,D,Bo,a,b,ci);
+initial
+#50
+$finish;
+endmodule
