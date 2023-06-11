@@ -1,0 +1,36 @@
+// design module
+
+`timescale 1ns / 1ps
+
+module ha_df(s,c,a,b);
+output s,c;
+input a,b;
+assign s=a^b;
+assign c=a&b;
+endmodule
+
+// test bench
+`timescale 1ns / 1ps
+module hatb;
+reg a,b;
+wire s,c;
+// intentiate module
+ha_df ap(s,c,a,b);
+initial
+begin
+a=1'b0; b=1'b0;
+#1
+a=1'b0; b=1'b1;
+#1
+a=1'b1; b=1'b0;
+#1
+a=1'b1; b=1'b1;
+
+end
+initial
+$monitor("time=%g,s=%b,c=%b,a=%b,b=%b",$time,s,c,a,b);
+initial
+# 20
+$finish;
+
+endmodule
